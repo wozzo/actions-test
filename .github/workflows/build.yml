@@ -10,15 +10,21 @@ on:
     branches: [ main ]
 
 jobs:
+  version:
+    uses: ./.github/workflows/version.yml
+
   build-app-one:
+    needs: [version]
     uses: ./.github/workflows/node-build.yml
     with:
       project_dir: app-one
       
   build-app-two:
+    needs: [version]
     uses: ./.github/workflows/node-build.yml
     with:
       project_dir: app-two
 
   build-dotnet:
+    needs: [version]
     uses: ./.github/workflows/dotnet.yml
