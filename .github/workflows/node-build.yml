@@ -1,20 +1,22 @@
 # This workflow will do a clean installation of node dependencies, cache/restore them, build the source code and run tests across different versions of node
 # For more information see: https://help.github.com/actions/language-and-framework-guides/using-nodejs-with-github-actions
 
-name: Node.js CI
-
+name: Build Node Project
+    
 on:
-  push:
-    branches: [ main ]
-  pull_request:
-    branches: [ main ]
+  workflow_call:
+    inputs:
+      project_dir:
+        description: 'Path to the project'
+        required: true
+        type: string
 
 jobs:
-  build-app-one:
+  build:
     runs-on: ubuntu-latest
     defaults:
       run:
-        working-directory: 'app-one'
+        working-directory: ${{ inputs.project_dir }}
 
     steps:
     - uses: actions/checkout@v2
@@ -23,12 +25,13 @@ jobs:
       with:
         node-version: '12'
         cache: 'npm'
-        cache-dependency-path: app-one
+        cache-dependency-path: ${{ inputs.project_dir }}
     - run: npm ci
     - run: npm run build --if-present
     - run: npm test
     - run: ls
     - uses: actions/upload-artifact@v2
       with:
-        name: app-one
-        path: app-one/build/**/*
+        name: ${{ inputs.project_dir }}
+        path: ${{ inputs.project_dir }}/build/**/*
+        if-no-files-found: error
