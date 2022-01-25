@@ -12,3 +12,4 @@ runs:
       name: version
   - id: get_version
     run: echo ::set-output name=version::"$(<version.txt )"
+    shell: bash
