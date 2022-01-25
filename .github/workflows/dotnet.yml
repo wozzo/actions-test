@@ -18,7 +18,7 @@ jobs:
     - name: Build
       run: dotnet build --no-restore --configuration release
     - name: Test
-      run: dotnet test --no-build --verbosity normal
+      run: dotnet test --no-build --verbosity normal --configuration release
     - uses: actions/upload-artifact@v2
       with:
         name: Upload ConsoleApp1
