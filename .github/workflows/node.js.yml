@@ -36,4 +36,4 @@ jobs:
     - uses: actions/upload-artifact@v2
       with:
         name: app-one
-        path: app-one.zip
+        path: app-one/build/app-one.zip
