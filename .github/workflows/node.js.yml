@@ -28,12 +28,8 @@ jobs:
     - run: npm run build --if-present
     - run: npm test
     - run: ls
-    - name: Install zip
-      uses: montudor/action-zip@v1
-    - name: Zip output
-      run: zip -qq -r app-one.zip ./
-      working-directory: app-one/build
     - uses: actions/upload-artifact@v2
       with:
+        working-directory: app-one/build
         name: app-one
-        path: app-one/build/app-one.zip
+        path: '**/*'
