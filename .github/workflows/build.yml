@@ -36,6 +36,7 @@ jobs:
     runs-on: ubuntu-latest
     name: Testing version action
     steps:
+      - uses: actions/checkout@v2
       - id: test_version
         uses: ./.github/actions/read-version.yml
       - run: echo version ${{ steps.test_version.outputs.version }}
