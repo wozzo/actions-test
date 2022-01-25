@@ -12,6 +12,8 @@ on:
 jobs:
   version:
     uses: ./.github/workflows/version.yml
+    secrets:
+      slack_webhook_url: ${{ secrets.SLACK_WEBHOOK_URL }}
 
   build-app-one:
     needs: [version]

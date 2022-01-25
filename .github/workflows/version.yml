@@ -2,6 +2,10 @@ name: Set Version
 
 on: 
   workflow_call:
+    secrets:
+      slack_webhook_url:
+        description: 'Slack Webhook url for notification'
+        required: true
 
 jobs:
   set-version:
@@ -31,4 +35,4 @@ jobs:
               "status": "started"
             }
         env:
-          SLACK_WEBHOOK_URL: ${{ secrets.SLACK_WEBHOOK_URL }}
+          SLACK_WEBHOOK_URL: ${{ secrets.slack_webhook_url }}
