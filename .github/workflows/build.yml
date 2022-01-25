@@ -38,5 +38,5 @@ jobs:
     steps:
       - uses: actions/checkout@v2
       - id: test_version
-        uses: ./.github/actions/read-version.yml
+        uses: ./.github/actions/read-version
       - run: echo version ${{ steps.test_version.outputs.version }}
