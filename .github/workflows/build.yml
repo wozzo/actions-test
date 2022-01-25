@@ -21,4 +21,4 @@ jobs:
       project_dir: app-two
 
   build-dotnet:
-    uses: ./.github/workflows/dotnet.ymp
+    uses: ./.github/workflows/dotnet.yml
