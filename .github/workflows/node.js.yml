@@ -31,8 +31,8 @@ jobs:
     - name: Install zip
       uses: montudor/action-zip@v1
     - name: Zip output
-      run: zip -qq -r app-one.zip app-one/build
-      working-directory: path/to/work-dir
+      run: zip -qq -r app-one.zip ./
+      working-directory: app-one/build
     - uses: actions/upload-artifact@v2
       with:
         name: app-one
