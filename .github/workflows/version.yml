@@ -16,6 +16,11 @@ jobs:
         if: ${{ github.ref == 'ref/tags/v*' }}
       - id: get_version
         run: echo ::set-output name=version::"$(<version.txt )"
+      - uses: actions/upload-artifact@v2
+        with:
+          name: version
+          path: version.txt
+          if-no-files-found: error
       - name: Start Build Notification
         id: slack
         uses: slackapi/slack-github-action@v1.17.0
