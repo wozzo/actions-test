@@ -9,7 +9,7 @@ jobs:
 
     steps:
       - name: Set Version from Date
-        run: echo $(echo date '+%Y.%m.%d.%H%M%S') > version.txt
+        run: echo $(date '+%Y.%m.%d.%H%M%S') > version.txt
         if: ${{ github.ref != 'ref/tags/*' }}
       - name: Set Version from Tag
         run: echo $(echo $GITHUB_REF | cut -d / -f 3) > version.txt
