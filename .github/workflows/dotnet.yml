@@ -1,15 +1,11 @@
-name: .NET
+name: Build dotnet
 
 on:
-  push:
-    branches: [ main ]
-  pull_request:
-    branches: [ main ]
+  workflow_call:
 
 jobs:
   build:
-
-    runs-on: ubuntu-latest
+    runs-on: windows-latest
 
     steps:
     - uses: actions/checkout@v2
@@ -23,3 +19,17 @@ jobs:
       run: dotnet build --no-restore
     - name: Test
       run: dotnet test --no-build --verbosity normal
+
+  build-Consoleapp1:
+    runs-on: windows-latest
+    needs: []
+    steps:
+    - name: Build
+      run: dotnet build --no-restore --configuration release
+    - uses: actions/upload-artifact@v2
+      with:
+        name: ConsoleApp1
+        path: ${{ inputs.project_dir }}/ConsoleApp1/bin/Release/net5.0/**/*
+        if-no-files-found: error
+
+    
