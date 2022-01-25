@@ -1,0 +1,29 @@
+name: Set Version
+
+on: 
+  workflow_call:
+
+jobs:
+  set-version:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Set Version from Date
+        run: echo $(echo date '+%Y.%m.%d.%H%M%S') > version.txt
+        if: ${{ github.ref != ref/tags/* }}
+      - name: Set Version from Tag
+        run: echo $(echo $GITHUB_REF | cut -d / -f 3) > version.txt
+        if: ${{ github.ref == ref/tags/v* }}
+      - id: get_version
+        run: echo ::set-output name=version::"$(<version.txt )"
+      - name: Start Build Notification
+        id: slack
+        uses: slackapi/slack-github-action@v1.17.0
+        with:
+          payload: |
+            {
+              "version": "${{ steps.get_version.outputs.version }}",
+              "status": "started"
+            }
+        env:
+          SLACK_WEBHOOK_URL: ${{ secrets.SLACK_WEBHOOK_URL }}
