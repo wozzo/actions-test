@@ -31,12 +31,22 @@ jobs:
     needs: [version]
     uses: ./.github/workflows/dotnet.yml
 
-  version-test:
-    needs: [version]
+  finish:
+    if: always()
+    needs: [build-app-one, build-app-two, build-dotnet]
     runs-on: ubuntu-latest
-    name: Testing version action
+    name: Finish build
     steps:
       - uses: actions/checkout@v2
-      - id: test_version
+      - id: get_version
         uses: ./.github/actions/read-version
-      - run: echo version ${{ steps.test_version.outputs.version }}
+      - name: Finish Build Notification
+        uses: slackapi/slack-github-action@v1.17.0
+        with:
+          payload: |
+            {
+              "version": "${{ steps.get_version.outputs.version }}",
+              "status": "finished"
+            }
+        env:
+          SLACK_WEBHOOK_URL: ${{ secrets.slack_webhook_url }}
