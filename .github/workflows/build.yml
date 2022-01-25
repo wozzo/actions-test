@@ -30,3 +30,12 @@ jobs:
   build-dotnet:
     needs: [version]
     uses: ./.github/workflows/dotnet.yml
+
+  version-test:
+    needs: [version]
+    runs-on: ubuntu-latest
+    name: Testing version action
+    steps:
+      - id: test_version
+        uses: ./.github/actions/read-version.yml
+      - run: echo version ${{ steps.test_version.outputs.version }}

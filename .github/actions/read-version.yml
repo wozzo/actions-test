@@ -1,0 +1,14 @@
+name: Read Version
+description: Reads the version artefact and sets output
+outputs:
+  version:
+    description: The version
+    value: ${{ steps.get_version.outputs.version }}
+runs:
+  using: "composite"
+  steps:
+  - uses: actions/download-artifact@v2
+    with:
+      name: version
+  - id: get_version
+    run: echo ::set-output name=version::"$(<version.txt )"
