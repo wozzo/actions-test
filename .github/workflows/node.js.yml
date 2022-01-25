@@ -15,26 +15,24 @@ jobs:
     defaults:
       run:
         working-directory: 'app-one'
-    strategy:
-      matrix:
-        node-version: [12.x, 14.x, 16.x]
-        # See supported Node.js release schedule at https://nodejs.org/en/about/releases/
 
     steps:
     - uses: actions/checkout@v2
     - name: Use Node.js ${{ matrix.node-version }}
       uses: actions/setup-node@v2
       with:
-        node-version: ${{ matrix.node-version }}
+        node-version: '12'
         cache: 'npm'
         cache-dependency-path: app-one
     - run: npm ci
     - run: npm run build --if-present
     - run: npm test
     - run: ls
-    - uses: montudor/action-zip@v1
-      with:
-        args: zip -qq -r app-one.zip app-one/build
+    - name: Install zip
+      uses: montudor/action-zip@v1
+    - name: Zip output
+      run: zip -qq -r app-one.zip app-one/build
+      working-directory: path/to/work-dir
     - uses: actions/upload-artifact@v2
       with:
         name: app-one
